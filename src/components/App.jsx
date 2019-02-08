@@ -18,22 +18,18 @@ class App extends React.Component {
    render() {
       return (
          <div className="container">
-            <div className="container ">
-               <div className="row justify-content-center">
-                  <div className="col-2">
-                     <img
-                        src="https://ghibliapi.herokuapp.com/images/logo.svg"
-                        alt="placeholder"
-                        className="ghibli-logo"
-                     />
-                  </div>
-               </div>
+            <div className="container d-md-flex justify-content-center">
+               <img
+                  src="https://ghibliapi.herokuapp.com/images/logo.svg"
+                  alt="placeholder"
+                  className="ghibli-logo"
+               />
             </div>
 
             <h1 className="title text-center m-3">
                My Favorite Ghibli Movies!!!
             </h1>
-            <div className="row">
+            <div className="row justify-content-center">
                {this.state.films.map(film => {
                   return <FilmCard key={film.id} film={film} />;
                })}
