@@ -2,7 +2,7 @@ import React from 'react';
 
 const FilmCard = props => {
    return (
-      <div className="card-deck col-md-4 ">
+      <div key={props.film.id} className="card-deck col-md-4 ">
          <div className="card m-2 p-1 border-dark rounded">
             <div className="card-header border-dark">
                <h4 className="card-title">{props.film.title}</h4>

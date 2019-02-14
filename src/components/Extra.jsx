@@ -4,7 +4,6 @@ import FilmCard from './FilmCard';
 class App extends React.Component {
    constructor(props) {
       super(props);
-    
       this.state = {
          films: [],
          people: [],
@@ -18,26 +17,22 @@ class App extends React.Component {
       this.setState({ films });
    }
 
-   async handleFilmButton() {}
-
-   clickButton() {
-      this.setState({ show: !this.state.show })
+   async handleFilmButton() {
+      
    }
 
-  
-
-   // showCards(show) {
-   //    switch (show) {
-   //       case 'films':
-   //          this.setState({
-   //             show: <FilmCard films={this.state.films} />
-   //          });
-   //          break;
-   //       case 'people':
-   //          this.setState({ show: 'err'})
-   //          break;
-   //    }
-   // }
+   showCards(show) {
+      switch (show) {
+         case 'films':
+            this.setState({
+               show: <FilmCard films={this.state.films} />
+            });
+            break;
+         case 'people':
+            this.setState({ show: 'err'})
+            break;
+      }
+   }
 
    render() {
       return (
@@ -52,7 +47,7 @@ class App extends React.Component {
             <button
                className="film-button"
                type="submit"
-               onClick={() => this.clickButton()}
+               onClick={() => this.showCards('films')}
             >
                Click for Ghibli Films
             </button>
@@ -60,16 +55,21 @@ class App extends React.Component {
             <h1 className="title text-center m-3">
                My Favorite Ghibli Movies!!!
             </h1>
-            {/* {this.state.show} */}
-
-            <div className="row justify-content-center">
+            {this.state.show}
+            
+            {/* <div className="row justify-content-center">
                {this.state.films.map(film => {
-                  return <FilmCard film={film} />;
+                  return <FilmCard key={film.id} film={film} />;
                })}
-            </div>
+            </div> */}
          </div>
       );
    }
 }
 
 export default App;
+
+
+
+///
+
