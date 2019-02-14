@@ -57,11 +57,11 @@ class App extends React.Component {
             </h1>
             {this.state.show}
             
-            {/* <div className="row justify-content-center">
+            <div className="row justify-content-center">
                {this.state.films.map(film => {
                   return <FilmCard key={film.id} film={film} />;
                })}
-            </div> */}
+            </div>
          </div>
       );
    }
