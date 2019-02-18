@@ -1,32 +1,50 @@
 import React from 'react';
 import FilmCard from './FilmCard';
+// import 'isomorphic-fetch';
+// import es6Promise from 'es6-promise'
+// es6Promise.polyfill();
 
 class App extends React.Component {
    constructor(props) {
       super(props);
-
       this.state = {
          films: [],
          people: [],
-         toggle: false
+         cards: false
       };
    }
 
-   async componentDidMount() {
+   componentDidMount() {
+      this.getFilms();
+   }
+
+   async getFilms() {
       let res = await fetch('https://ghibliapi.herokuapp.com/films');
       let films = await res.json();
       this.setState({ films });
    }
 
-   async handleFilmButton() {}
-
-   clickButton(e) {
-      // alert('push');
-      e.preventDefault();
-      this.setState(prevState => ({
-         toggle: !prevState.toggle
-      }));
+   displayCards(cards) {
+      switch (cards) {
+         case 'films':
+            this.setState({
+               show: <FilmCard films={this.state.films} />
+            });
+            break;
+         default:
+            this.setState({show: false})
    }
+}
+
+
+
+   // clickButton(e) {
+   //    // alert('push');
+   //    e.preventDefault();
+   //    this.setState(prevState => ({
+   //       toggle: !prevState.toggle
+   //    }));
+   // }
 
    render() {
       return (
@@ -40,10 +58,17 @@ class App extends React.Component {
             </div>
             <button
                className="film-button"
-               type="submit"
-               onClick={e => this.clickButton(e)}
+              
+               onClick={() => this.displayCards('films')}
             >
                Click for Ghibli Films
+            </button>
+            <button
+               className="people-button"
+               
+               onClick={() => this.displayCards('people')}
+            >
+               Click for Ghibli People
             </button>
 
             <h1 className="title text-center m-3">
@@ -51,14 +76,9 @@ class App extends React.Component {
             </h1>
 
             <div className="row justify-content-center">
-               {this.state.films.map(film => {
-                  return <FilmCard film={film}
-                     cardToggle={{
-                     toggle: this.state.toggle,
-                  }}
-                  />;
-               })}
+               
             </div>
+            {this.state.cards}
          </div>
       );
    }
