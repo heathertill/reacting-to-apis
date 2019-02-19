@@ -21,14 +21,14 @@ class App extends React.Component {
    }
 
    async getInfo() {
-      try {let res = await fetch('https://ghibliapi.herokuapp.com/films');
-      let films = await res.json();
-      let res2 = await fetch('https://ghibliapi.herokuapp.com/people');
-      let people = await res2.json();
+      try {
+         let res = await fetch('https://ghibliapi.herokuapp.com/films');
+         let films = await res.json();
+         let res2 = await fetch('https://ghibliapi.herokuapp.com/people');
+         let people = await res2.json();
          this.setState({ films, people });
-      }
-      catch (e) {
-         console.log(e)
+      } catch (e) {
+         console.log(e);
       }
    }
 
