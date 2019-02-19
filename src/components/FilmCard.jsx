@@ -1,15 +1,19 @@
 import React from 'react';
 
 const FilmCard = props => {
-   return props.films.map((film) => {
+   return props.films.map(film => {
       return (
-         <div key={film.id} className="card-deck col-md-4 ">
+         <div className="card-deck col-md-4" key={film.id}>
             <div className="card m-2 p-1 border-dark rounded">
-               <div className="card-header border-dark">
-                  <h4 className="card-title">{film.title}</h4>
+               <div className="card-header border-dark" style={{backgroundColor: '#e5eef0'}}>
+                  
+                  <h4 className="card-title">{film.title} ({film.release_date})</h4>
                </div>
                <div className="card-body">
-                  <p className="card-text">{film.description}</p>
+                  <h5>Producer</h5>
+                  <p className="card-text pl-2">{film.producer}</p>
+               <h5>Synopsis</h5>
+                  <p className="card-text p-2">{film.description}</p>
                </div>
                <div className="card-footer bg-transparent d-flex">
                   <img
@@ -25,5 +29,7 @@ const FilmCard = props => {
       );
    });
 };
+
+
 
 export default FilmCard;

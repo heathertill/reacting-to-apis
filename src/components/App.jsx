@@ -1,8 +1,9 @@
 import React from 'react';
+import 'isomorphic-fetch';
+import 'es6-promise';
 import FilmCard from './FilmCard';
-// import 'isomorphic-fetch';
-// import es6Promise from 'es6-promise'
-// es6Promise.polyfill();
+import Main from './Main';
+import PeopleCard from './PeopleCard';
 
 class App extends React.Component {
    constructor(props) {
@@ -10,77 +11,121 @@ class App extends React.Component {
       this.state = {
          films: [],
          people: [],
-         cards: false
+         filmCards: false,
+         peopleCards: false
       };
    }
 
    componentDidMount() {
-      this.getFilms();
+      this.getInfo();
    }
 
-   async getFilms() {
-      let res = await fetch('https://ghibliapi.herokuapp.com/films');
+   async getInfo() {
+      try {let res = await fetch('https://ghibliapi.herokuapp.com/films');
       let films = await res.json();
-      this.setState({ films });
+      let res2 = await fetch('https://ghibliapi.herokuapp.com/people');
+      let people = await res2.json();
+         this.setState({ films, people });
+      }
+      catch (e) {
+         console.log(e)
+      }
    }
 
-   displayCards(cards) {
-      switch (cards) {
-         case 'films':
-            this.setState({
-               show: <FilmCard films={this.state.films} />
-            });
-            break;
-         default:
-            this.setState({show: false})
+   displayFilms() {
+      this.setState({
+         filmCards: true,
+         peopleCards: false
+      });
    }
-}
 
-
-
-   // clickButton(e) {
-   //    // alert('push');
-   //    e.preventDefault();
-   //    this.setState(prevState => ({
-   //       toggle: !prevState.toggle
-   //    }));
-   // }
+   displayPeople() {
+      this.setState({
+         filmCards: false,
+         peopleCards: true
+      });
+   }
 
    render() {
-      return (
-         <div className="container">
-            <div className="container d-md-flex justify-content-center">
-               <img
-                  src="https://ghibliapi.herokuapp.com/images/logo.svg"
-                  alt="placeholder"
-                  className="ghibli-logo"
-               />
+      if (this.state.filmCards === false && this.state.peopleCards === false) {
+         return (
+            <div className="container-fluid">
+               <Main />
+               <div className="row">
+                  <div className="col-md-12 text-center">
+                     <button
+                        className="btn btn-secondary m-2 d-inline-block"
+                        onClick={() => this.displayFilms()}
+                     >
+                        Click for Ghibli Films
+                     </button>
+                     <button
+                        className="btn btn-secondary m-2 d-inline-block"
+                        onClick={() => this.displayPeople()}
+                     >
+                        Click for Ghibli People
+                     </button>
+                  </div>
+               </div>
             </div>
-            <button
-               className="film-button"
-              
-               onClick={() => this.displayCards('films')}
-            >
-               Click for Ghibli Films
-            </button>
-            <button
-               className="people-button"
-               
-               onClick={() => this.displayCards('people')}
-            >
-               Click for Ghibli People
-            </button>
-
-            <h1 className="title text-center m-3">
-               My Favorite Ghibli Movies!!!
-            </h1>
-
-            <div className="row justify-content-center">
-               
+         );
+      } else if (
+         this.state.filmCards === true &&
+         this.state.peopleCards === false
+      ) {
+         return (
+            <div className="container-fluid">
+               <Main />
+               <div className="row">
+                  <div className="col-md-12 text-center">
+                     <button
+                        className="btn btn-secondary m-2 d-inline-block"
+                        onClick={() => this.displayFilms()}
+                     >
+                        Click for Ghibli Films
+                     </button>
+                     <button
+                        className="btn btn-secondary m-2 d-inline-block"
+                        onClick={() => this.displayPeople()}
+                     >
+                        Click for Ghibli People
+                     </button>
+                  </div>
+               </div>
+               <div className="row justify-content-center">
+                  <FilmCard films={this.state.films} />
+               </div>
             </div>
-            {this.state.cards}
-         </div>
-      );
+         );
+      } else if (
+         this.state.filmCards === false &&
+         this.state.peopleCards === true
+      ) {
+         return (
+            <div className="container-fluid">
+               <Main />
+               <div className="row">
+                  <div className="col-md-12 text-center">
+                     <button
+                        className="btn btn-secondary m-2 d-inline-block"
+                        onClick={() => this.displayFilms()}
+                     >
+                        Click for Ghibli Films
+                     </button>
+                     <button
+                        className="btn btn-secondary m-2 d-inline-block"
+                        onClick={() => this.displayPeople()}
+                     >
+                        Click for Ghibli People
+                     </button>
+                  </div>
+               </div>
+               <div className="row justify-content-center">
+                  <PeopleCard people={this.state.people} />
+               </div>
+            </div>
+         );
+      }
    }
 }
 
